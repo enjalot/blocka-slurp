@@ -12,3 +12,6 @@ data/gists-files.tar.gz
 data/parsed.tar.gz
 data/latest.json
 .DS_Store
+data/archive/
+*.sublime-project
+*.sublime-workspace
