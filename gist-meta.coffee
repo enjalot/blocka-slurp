@@ -9,10 +9,16 @@ gh = require './github'
 ###
 # get all gists for everyone
 coffee gist-meta.coffee
+
 # get all gists updated/created in last 20 minutes for everyone
-coffee gist-meta.coffee latest.json 20min
+coffee gist-meta.coffee data/latest.json 20min
+
 # get all gists for the new users (found in data/new-usables.csv)
 coffee gist-meta.coffee '' '' new-users
+
+# get all gists for the new users (found in data/new-usables.csv)
+# write to data/latest.json
+coffee gist-meta.coffee data/latest.json '' new-users
 ###
 
 filename = process.argv[2] || "data/gist-meta.json"

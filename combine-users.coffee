@@ -49,6 +49,27 @@ blocksusers2 = Object.keys(userHash).length
 total += blocksusers2
 console.log("#{blocksusers2} users from blocks links in knight course")
 
+# d3unconf2015 --------------------------------------------------------------
+# pull usernames out of block links from the d3unconf2015 h/t @enjalot
+blocksStr = fs.readFileSync('data/user-sources/unconf2015.csv').toString()
+blocksLinks2 = d3.csv.parse(blocksStr)
+blocksLinks2.forEach (d) ->
+  username = parseBlockURL(d.url)
+  userHash[username] = 1
+blocksusers2 = Object.keys(userHash).length
+total += blocksusers2
+console.log("#{blocksusers2} users from blocks links in d3unconf2015")
+
+# d3unconf2015 --------------------------------------------------------------
+# pull usernames out of block links from the d3unconf2015 h/t @enjalot
+blocksStr = fs.readFileSync('data/user-sources/unconf2016.csv').toString()
+blocksLinks2 = d3.csv.parse(blocksStr)
+blocksLinks2.forEach (d) ->
+  username = parseBlockURL(d.url)
+  userHash[username] = 1
+blocksusers2 = Object.keys(userHash).length
+total += blocksusers2
+console.log("#{blocksusers2} users from blocks links in d3unconf2016")
 
 # BLOCKBUILDER USERS -----------------------------------------------------------
 # collect the usernames found in a dump of the public github profiles stored in blockbuilder
@@ -62,7 +83,7 @@ string.split("\n").forEach (userStr) ->
 
 bbusers = Object.keys(userHash).length - total
 total += bbusers
-console.log("#{bbusers} users added from bb")
+console.log("#{bbusers} users added from blockbuilder")
 
 
 # MANUALLY CURATED USERS -------------------------------------------------------
@@ -76,6 +97,19 @@ d3.csv.parse userscsv, (user) ->
 csvusers = Object.keys(userHash).length - total
 total += csvusers
 console.log("#{csvusers} added from manual list of users")
+
+# MANUALLY CURATED USERS -------------------------------------------------------
+# a list of users who use d3 in a their github username 
+# or in a repo name, compiled from all the github repos on BigQuery h/t @micahstubbs
+userscsv = fs.readFileSync('data/user-sources/github-users-with-d3-in-username-or-repo-bigquery.csv').toString()
+d3.csv.parse userscsv, (user) ->
+  username = user["username"]?.toLowerCase()
+  return unless username
+  userHash[username] = 1
+
+csvusers = Object.keys(userHash).length - total
+total += csvusers
+console.log("#{csvusers} added from github repo bigquery list of users")
 
 
 # BL.OCKSPLORER FORM SUBMISSIONS ------------------------------------------------

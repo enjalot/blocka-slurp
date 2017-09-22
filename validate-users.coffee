@@ -13,6 +13,9 @@ parse = (err, body) ->
     return null
 
 username = process.argv[2]
+startIndex = process.argv[3]
+# example usage startIndex=5004 
+# coffee validate-users.coffee '' 5004
 if username
   gh.getUser username, (err, response, body) ->
     u = parse(err, body)
@@ -32,6 +35,8 @@ else
 
   usersString = fs.readFileSync('data/users-combined.csv').toString()
   users = d3.csv.parse usersString
+  if startIndex
+    users = users.slice startIndex
   usables = []
   async.eachLimit users, 5, (user, userCb) ->
     gh.getUser user.username, (err, response, body) ->
@@ -39,6 +44,8 @@ else
       u = parse(err, body)
       console.log user.username, u?.public_gists
       console.log "x-ratelimit-remaining:", response?.headers['x-ratelimit-remaining']
+      if response?.headers['x-ratelimit-remaining'] <= 1
+        return
       return userCb() unless u
       #console.log err, response, u
       if u.public_gists > 0 && usables.indexOf(u.login) < 0
