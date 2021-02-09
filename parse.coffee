@@ -187,7 +187,7 @@ pruneFiles = (gist) ->
 
 parseD3Functions = (code) ->
   # we match d3.foo.bar( which will find plugins and unofficial api functions
-  re = new RegExp(/d3\.[a-zA-Z0-9\.]*?\(/g)
+  re = new RegExp(/(d3-[\w-]*)(?=\.)/g)
   matches = code.match(re) or []
   return matches
 
