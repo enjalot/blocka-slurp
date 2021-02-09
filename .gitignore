@@ -1,5 +1,6 @@
 config.js
 node_modules/
+data/archive
 data/gist-meta.json
 data/new.json
 data/parsed/
@@ -10,5 +11,8 @@ data/gists.zip
 data/gists-files.zip
 data/gists-files.tar.gz
 data/parsed.tar.gz
-data/latest.json
+data/latest*
 .DS_Store
+update-log*
+gist-meta-users-part-2.csv
+data/gists-clones.tar.bz2

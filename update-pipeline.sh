@@ -12,17 +12,17 @@
 
 
 BLOCKBUILDER_SEARCH_INDEX_HOME="/Users/m/workspace/blockbuilder-search-index"
-UPDATE_AFTER_TIMESTAMP="2018-03-14T00:00:00Z"
+UPDATE_AFTER_TIMESTAMP="2018-08-24T00:00:00Z"
 
 cd $BLOCKBUILDER_SEARCH_INDEX_HOME
 
 coffee combine-users.coffee
 # 205 users from blocks links in SO
 # 468 users from blocks links in knight course
-# 2594 users added from bb
-# 200 added from manual list of users
-# 39 users added from blocksplorer
-# 3506 users total
+# 4524 users added from bb
+# 199 added from manual list of users
+# 37 users added from blocksplorer
+# 5433 users total
 
 #
 # optionally get all blocks for new users 
@@ -32,142 +32,131 @@ coffee combine-users.coffee
 # the file data/new.json exists
 # if yes, run this command. if no, do nothing
 #  
-# coffee gist-meta.coffee data/new.json '' 'new-users'
-# combining 3147 with 25277 existing blocks
-# writing 28336 blocks to data/gist-meta.json
-# writing 3147 to data/new.json
+coffee gist-meta.coffee data/new.json '' 'new-users'
+# no change, did not run this one this time
 
 #
 # fetch the metadata for all new gists
 # for all known users from the github API
 #
-#
-# TODO: inside gist-meta script handle case were github 
-# API allocaton runs out before metadata is fetched for all users
-# fixing this is required to run the whole pipeline in sequence, 
-# in autonomous mode
-#
-coffee gist-meta.coffee data/latest-20180314-to-20180820.json $UPDATE_AFTER_TIMESTAMP
-# x-ratelimit-remaining: 4652
-# done with yonester, found 5 gists
-# x-ratelimit-remaining: 4651
-# x-ratelimit-remaining: undefined
-# done with yifancui, found 34 gists
-# x-ratelimit-remaining: undefined
-# ...
+coffee gist-meta.coffee data/latest-20180824-to-20180825.json $UPDATE_AFTER_TIMESTAMP
+# done with zzhang115, found 0 gists
+# rate limit remaining 418
 # done with zzolo, found 0 gists
-# done. number of new gists: 1965
-# combining 1965 with 29327 existing blocks
-# writing 29424 blocks to data/gist-meta.json
-# writing 1965 to data/latest-after-20180314.json
-# Elasticsearch DEBUG: 2018-08-21T12:58:48Z
+# done. number of new gists: 57
+# combining 57 with 37321 existing blocks
+# writing 37346 blocks to data/gist-meta.json
+# writing 57 to data/latest-20180824-to-20180825.json
+# Elasticsearch DEBUG: 2018-08-27T05:29:31Z
 #   starting request { method: 'POST',
 #     path: '/bbindexer/scripts',
 #     body:
 #      { script: 'meta',
-#        numBlocks: 1965,
-#        filename: 'data/latest-after-20180314.json',
-#        since: 1970-01-01T00:00:00.000Z,
-#        ranAt: 2018-08-21T12:58:48.304Z },
+#        numBlocks: 57,
+#        filename: 'data/latest-20180824-to-20180825.json',
+#        since: '2018-08-24T00:00:00Z',
+#        ranAt: 2018-08-27T05:29:31.657Z },
 #     query: {} }
 #
 #
-# Elasticsearch TRACE: 2018-08-21T12:58:49Z
+# Elasticsearch TRACE: 2018-08-27T05:29:31Z
 #   -> POST http://localhost:9200/bbindexer/scripts
 #   {
 #     "script": "meta",
-#     "numBlocks": 1965,
-#     "filename": "data/latest-after-20180314.json",
-#     "since": "1970-01-01T00:00:00.000Z",
-#     "ranAt": "2018-08-21T12:58:48.304Z"
+#     "numBlocks": 57,
+#     "filename": "data/latest-20180824-to-20180825.json",
+#     "since": "2018-08-24T00:00:00Z",
+#     "ranAt": "2018-08-27T05:29:31.657Z"
 #   }
 #   <- 201
 #   {
 #     "_index": "bbindexer",
 #     "_type": "scripts",
-#     "_id": "AWVckPawo8z7fxr9sXXM",
+#     "_id": "F6bbeWUBizCTN0xZyZ1N",
 #     "_version": 1,
+#     "result": "created",
 #     "_shards": {
 #       "total": 2,
 #       "successful": 1,
 #       "failed": 0
 #     },
-#     "created": true
+#     "_seq_no": 1,
+#     "_primary_term": 1
 #   }
 #
-# Elasticsearch DEBUG: 2018-08-21T12:58:49Z
+# Elasticsearch DEBUG: 2018-08-27T05:29:31Z
 #   Request complete
 #
 # indexed
-
+#
 #
 # let's clone the gists we just found
 #
-coffee gist-cloner.coffee data/latest-20180314-to-20180820.json
-# From https://gist.github.com/cec274f418b8675efaead3a56a5b324b
-#  * branch            master     -> FETCH_HEAD
-# Already up-to-date.
-# cec274f418b8675efaead3a56a5b324b yonicd 0 From https://gist.github.com/cec274f418b8675efaead3a56a5b324b
-#  * branch            master     -> FETCH_HEAD
-#
-# From https://gist.github.com/4bc59fca901388ebe4905bdb19af1567
-#  * branch            master     -> FETCH_HEAD
-# Already up-to-date.
-# 4bc59fca901388ebe4905bdb19af1567 yonicd 0 From https://gist.github.com/4bc59fca901388ebe4905bdb19af1567
-#  * branch            master     -> FETCH_HEAD
+coffee gist-cloner.coffee data/latest-20180824-to-20180825.json
+# Cloning into '7fba0feaccd30a12fffcfaa42b79a2e7'...
+# 7fba0feaccd30a12fffcfaa42b79a2e7 tomshanley 0 Cloning into '7fba0feaccd30a12fffcfaa42b79a2e7'...
 #
 # done writing files
-# Elasticsearch DEBUG: 2018-08-21T13:14:54Z
+# Elasticsearch DEBUG: 2018-08-27T05:49:30Z
 #   starting request { method: 'POST',
 #     path: '/bbindexer/scripts',
 #     body:
 #      { script: 'content',
 #        timeouts: [],
-#        filename: 'data/latest-20180314-to-20180820.json',
-#        ranAt: 2018-08-21T13:14:54.063Z },
+#        filename: 'data/latest-20180824-to-20180825.json',
+#        ranAt: 2018-08-27T05:49:30.801Z },
 #     query: {} }
 #
 #
-# Elasticsearch TRACE: 2018-08-21T13:14:54Z
+# Elasticsearch TRACE: 2018-08-27T05:49:30Z
 #   -> POST http://localhost:9200/bbindexer/scripts
 #   {
 #     "script": "content",
 #     "timeouts": [],
-#     "filename": "data/latest-20180314-to-20180820.json",
-#     "ranAt": "2018-08-21T13:14:54.063Z"
+#     "filename": "data/latest-20180824-to-20180825.json",
+#     "ranAt": "2018-08-27T05:49:30.801Z"
 #   }
 #   <- 201
 #   {
 #     "_index": "bbindexer",
 #     "_type": "scripts",
-#     "_id": "AWVcn7EAo8z7fxr9sXXS",
+#     "_id": "GKbueWUBizCTN0xZFZ1A",
 #     "_version": 1,
+#     "result": "created",
 #     "_shards": {
 #       "total": 2,
 #       "successful": 1,
 #       "failed": 0
 #     },
-#     "created": true
+#     "_seq_no": 1,
+#     "_primary_term": 1
 #   }
 #
-# Elasticsearch DEBUG: 2018-08-21T13:14:54Z
+# Elasticsearch DEBUG: 2018-08-27T05:49:30Z
 #   Request complete
 #
 # indexed
 
-coffee parse.coffee
-# 29419 'a488e022362571a9e1187985df7f47a4'
-# 29420 '8d331f9b5c7dd57908de0db3439ab7ab'
-# 29421 'd1dbded3fe2c8cb94b207904c7c4c73d'
-# 29422 '5b7d24613149e60867c2bf6fe097c587'
-# 29423 '492182b66a0d1a3dd5513ff5b71c900c'
-# 29424 '056046c1f83e3926484bd2e21847341e'
+# coffee parse.coffee
+
+# try new command from branch
+# https://github.com/micahstubbs/blockbuilder-search-index/tree/micah/55/exp/parse-modules 
+#
+# node parse
+#
+# gist 757ad6ea093000bf1900d6c0e2a9b126 romsson
+# gist 7fba0feaccd30a12fffcfaa42b79a2e7 tomshanley
 # done
 # skipped 0 missing files
-# wrote 10445 API blocks
-# wrote 11522 Color blocks
-# wrote 117533 Files blocks
-# wrote 29424 total blocks
+# wrote d3 API functions                         to data/parsed/apis.json
+# wrote colors                                   to data/parsed/colors.json
+# wrote 37346 block metadata entries             to data/parsed/blocks.json
+# wrote 37346 minified block metadata entries    to data/parsed/blocks-min.json
+# wrote 10446 single-block d3 API function lists to data/parsed/blocks-api.json
+# wrote 11523 colors entries                     to data/parsed/blocks-colors.json
+# wrote 11523 minified colors entries            to data/parsed/blocks-colors-min.json
+# wrote 0 file metadata entries                  to data/parsed/files-blocks.json
+# wrote 3844 script tags                         to data/parsed/script-tags.jsons
 
 cd data/parsed
 pwd
@@ -195,4 +184,5 @@ ls -lAFh
 # now let's call another shell script to generate the 
 # blocks graph metadata
 #
+cd $BLOCKBUILDER_SEARCH_INDEX_HOME
 sh update-pipeline-blocks-graph.sh
